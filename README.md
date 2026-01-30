@@ -28,7 +28,7 @@ Sistema IDS baseado em ML que detecta tráfego malicioso em tempo real, incluind
 
 ---
 
-### 2 - Analisador de Logs SIEM
+### 2 - Analisador de Logs SIEM (Em desenvolvimento)
 **Tecnologias:** Python, Regex, Pandas, SQLite
 
 Sistema SIEM para análise e correlação de logs de segurança com implementação de regras SIGMA.
@@ -43,7 +43,7 @@ Sistema SIEM para análise e correlação de logs de segurança com implementaç
 
 ---
 
-### 3 - Scanner de Vulnerabilidades Web
+### 3 - Scanner de Vulnerabilidades Web (Em desenvolvimento)
 **Tecnologias:** Python, Requests, BeautifulSoup4
 
 Scanner automatizado para identificar vulnerabilidades OWASP Top 10 em aplicações web.
@@ -58,7 +58,7 @@ Scanner automatizado para identificar vulnerabilidades OWASP Top 10 em aplicaç�
 
 ---
 
-### 4 - SSH Honeypot
+### 4 - SSH Honeypot (Em desenvolvimento)
 **Tecnologias:** Python, Paramiko, SQLite, GeoIP
 
 Honeypot SSH que registra tentativas de ataque e comportamento de atacantes.
@@ -73,7 +73,7 @@ Honeypot SSH que registra tentativas de ataque e comportamento de atacantes.
 
 ---
 
-### 5 - Monitor de Integridade de Arquivos (FIM)
+### 5 - Monitor de Integridade de Arquivos (FIM) (Em desenvolvimento)
 **Tecnologias:** Python, Watchdog, Hashlib, SQLite
 
 Sistema de monitoramento de integridade que detecta modificações não autorizadas em arquivos críticos.
