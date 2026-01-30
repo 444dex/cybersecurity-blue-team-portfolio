@@ -28,7 +28,7 @@ Sistema IDS baseado em ML que detecta tráfego malicioso em tempo real, incluind
 
 ---
 
-### 2 - Analisador de Logs SIEM (Em desenvolvimento)
+### 2 - Analisador de Logs SIEM
 **Tecnologias:** Python, Regex, Pandas, SQLite
 
 Sistema SIEM para análise e correlação de logs de segurança com implementação de regras SIGMA.
