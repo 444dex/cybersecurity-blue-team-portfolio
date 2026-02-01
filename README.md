@@ -43,7 +43,7 @@ Sistema SIEM para análise e correlação de logs de segurança com implementaç
 
 ---
 
-### 3 - Scanner de Vulnerabilidades Web (Em desenvolvimento)
+### 3 - Scanner de Vulnerabilidades Web
 **Tecnologias:** Python, Requests, BeautifulSoup4
 
 Scanner automatizado para identificar vulnerabilidades OWASP Top 10 em aplicações web.
