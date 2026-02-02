@@ -58,7 +58,7 @@ Scanner automatizado para identificar vulnerabilidades OWASP Top 10 em aplica√ß√
 
 ---
 
-### 4 - SSH Honeypot (Em desenvolvimento)
+### 4 - SSH Honeypot
 **Tecnologias:** Python, Paramiko, SQLite, GeoIP
 
 Honeypot SSH que registra tentativas de ataque e comportamento de atacantes.
