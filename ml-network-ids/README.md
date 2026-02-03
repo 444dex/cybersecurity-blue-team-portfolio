@@ -28,7 +28,7 @@ Sistema IDS baseado em machine learning para detectar tráfego de rede anômalo 
 
 ```bash
 # Clone o repositório
-git clone https://github.com/444dex/cybersecurity-blue-team-portfolio.git
+git clone https://github.com/seu-usuario/ml-network-ids.git
 cd ml-network-ids
 
 # Crie ambiente virtual
@@ -47,12 +47,23 @@ pip install -r requirements.txt
 # Treinar o modelo
 python train_model.py
 
-# Executar IDS em tempo real
-sudo python ids_monitor.py --interface eth0
+# Executar IDS com interface auto-detectada (Windows e Linux)
+python ids_monitor.py
+
+# Listar interfaces de rede disponíveis no sistema
+python ids_monitor.py --list-interfaces
+
+# Especificar interface manualmente
+python ids_monitor.py --interface eth0          # Linux
+python ids_monitor.py --interface "Wi-Fi"       # Windows
+python ids_monitor.py --interface wlan0         # Linux (Wi-Fi)
 
 # Analisar arquivo PCAP
 python analyze_pcap.py --file capture.pcap
 ```
+
+> **Nota (Linux):** a captura de pacotes requer privilégios root. Execute com `sudo python ids_monitor.py`.  
+> **Nota (Windows):** instale o [Npcap](https://npcap.com/#download) antes de executar. Não é necessário `sudo`.
 
 ## Métricas de Desempenho
 - Acurácia: ~95%
@@ -79,6 +90,16 @@ ml-network-ids/
 └── requirements.txt
 ```
 
+## Compatibilidade
+
+| Sistema | Interface padrão | Privilegio necessário | Requisito extra |
+|---|---|---|---|
+| Linux | `eth0`, `wlan0`, `enp0s3`… | `sudo` | — |
+| macOS | `en0`, `en1`… | `sudo` | — |
+| Windows | `Wi-Fi`, `Ethernet`… | não | [Npcap](https://npcap.com/#download) instalado |
+
+Se você não passar `--interface`, o programa detecta automaticamente qual interface está ativa. Use `--list-interfaces` para ver todas as opções do seu sistema.
+
 ## Tipos de Ataques Detectados
 1. **Port Scanning** - Detecção de varredura de portas
 2. **DDoS** - Ataques de negação de serviço distribuído
@@ -87,7 +108,7 @@ ml-network-ids/
 
 ## Exemplo de Saída
 ```
-[2025-01-30 14:23:45] ALERT: Port Scan detectado
+[2026-01-30 14:23:45] ALERT: Port Scan detectado
   - Origem: 192.168.1.105
   - Destino: 192.168.1.1
   - Portas: 80, 443, 22, 3306, 8080
