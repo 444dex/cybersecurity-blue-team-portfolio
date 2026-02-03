@@ -208,7 +208,7 @@ def main():
     # Plota resultados
     plot_results(metrics)
     
-    print("\n✅ Treinamento concluído com sucesso!")
+    print("\n Treinamento concluído com sucesso!")
     print(f"Use o modelo com: python ids_monitor.py --model {model_path}")
 
 
