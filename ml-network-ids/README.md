@@ -10,7 +10,7 @@ Sistema IDS baseado em machine learning para detectar tráfego de rede anômalo 
 - Visualização de ameaças
 
 ## Tecnologias
-- Python 3.8+
+- Python 3.11+
 - Scikit-learn
 - Pandas, NumPy
 - Scapy (análise de pacotes)
