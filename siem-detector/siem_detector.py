@@ -229,10 +229,13 @@ def create_sample_logs():
 2025-01-30 10:35:00 apache[6789]: 192.168.1.150 - - "GET /users UNION SELECT * FROM passwords-- HTTP/1.1" 500 256
 """
     
-    with open('/home/claude/cybersecurity-projects/siem-detector/sample_logs.txt', 'w') as f:
+    # Usa caminho relativo ao diretório atual (funciona Windows/Linux)
+    output_path = Path('sample_logs.txt')
+    
+    with open(output_path, 'w', encoding='utf-8') as f:
         f.write(sample_logs)
     
-    print("[+] Arquivo de logs de exemplo criado: sample_logs.txt")
+    print(f"[+] Arquivo de logs de exemplo criado: {output_path.absolute()}")
 
 
 if __name__ == "__main__":
