@@ -42,7 +42,7 @@ pip install -r requirements.txt
 ## Uso
 
 ```bash
-# Criar baseline inicial
+# Criar baseline inicial # isso pode demorar dependendo da quantidade de arquivos no diretório
 python fim.py --init --path /etc           # Linux
 python fim.py --init --path C:\Windows     # Windows
 
