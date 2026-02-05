@@ -193,8 +193,8 @@ mkdir logs
 MIT License - Apenas para fins educacionais
 
 ##  Autor
-Seu Nome - [LinkedIn](seu-linkedin) - [GitHub](seu-github)
+Miguel "444dex" kuipers - [LinkedIn]((https://www.linkedin.com/in/miguel-erick-assun%C3%A7%C3%A3o-kuipers-9665382b4/) - [GitHub](https://github.com/444dex)
 
 ---
 
-⚠️ **AVISO LEGAL:** Este honeypot é apenas para fins educacionais. Use apenas em ambientes controlados e com autorização apropriada.
+**AVISO LEGAL:** Este honeypot é apenas para fins educacionais. Use apenas em ambientes controlados e com autorização apropriada.
