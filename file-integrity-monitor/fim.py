@@ -17,6 +17,9 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 
+# Cria diretório de logs se não existir
+Path('logs').mkdir(exist_ok=True)
+
 # Configuração de logging
 logging.basicConfig(
     level=logging.INFO,
