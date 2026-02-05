@@ -10,9 +10,13 @@ import logging
 import argparse
 import sqlite3
 from datetime import datetime
+from pathlib import Path
 import paramiko
 import sys
 
+
+# Cria diretório de logs se não existir
+Path('logs').mkdir(exist_ok=True)
 
 # Configuração de logging
 logging.basicConfig(
