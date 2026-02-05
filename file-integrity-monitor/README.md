@@ -28,11 +28,13 @@ Sistema de monitoramento de integridade de arquivos que detecta modificações n
 ## Instalação
 
 ```bash
-git clone https://github.com/444dex/cybersecurity-blue-team-portfolio.git
+git clone https://github.com/seu-usuario/file-integrity-monitor.git
 cd file-integrity-monitor
 
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # Linux/Mac
+# ou
+venv\Scripts\activate     # Windows
 
 pip install -r requirements.txt
 ```
@@ -41,10 +43,12 @@ pip install -r requirements.txt
 
 ```bash
 # Criar baseline inicial
-python fim.py --init --path /etc
+python fim.py --init --path /etc           # Linux
+python fim.py --init --path C:\Windows     # Windows
 
 # Monitorar diretório em tempo real
-python fim.py --monitor --path /var/www/html
+python fim.py --monitor --path /var/www/html       # Linux
+python fim.py --monitor --path C:\inetpub\wwwroot  # Windows
 
 # Verificar integridade
 python fim.py --check --path /etc
@@ -69,7 +73,7 @@ file-integrity-monitor/
 │   ├── email_alert.py
 │   └── webhook_alert.py
 ├── logs/
-│   └── fim.log
+│   └── fim.log         # Logs de eventos
 └── requirements.txt
 ```
 
@@ -98,7 +102,7 @@ $ python fim.py --monitor --path /etc
 [*] Iniciando monitoramento de /etc
 [*] Baseline carregado: 1,247 arquivos
 
-[2025-01-30 14:23:45]   ALERTA: Arquivo modificado
+[2025-01-30 14:23:45] ALERTA: Arquivo modificado
   Arquivo: /etc/passwd
   Tipo: MODIFICADO
   Hash Anterior: a1b2c3d4e5f6...
@@ -106,17 +110,17 @@ $ python fim.py --monitor --path /etc
   Timestamp: 2025-01-30 14:23:45
   Severidade: CRITICAL
 
-[2025-01-30 14:25:12]   ALERTA: Novo arquivo detectado
+[2025-01-30 14:25:12] ALERTA: Novo arquivo detectado
   Arquivo: /etc/cron.d/backdoor
   Tipo: CRIADO
   Hash: 9f8e7d6c5b4a...
   Timestamp: 2025-01-30 14:25:12
   Severidade: HIGH
 
-[2025-01-30 14:27:30]  Alerta enviado para: admin@example.com
+[2025-01-30 14:27:30] Alerta enviado para: admin@example.com
 ```
 
-##  Relatório de Integridade
+## Relatório de Integridade
 
 ```
 ╔═══════════════════════════════════════════════╗
@@ -180,6 +184,12 @@ alerts:
 scan_interval: 3600  # 1 hora
 ```
 
+## Aprendizados
+Este projeto demonstra:
+- Cálculo e verificação de hashes criptográficos
+- Monitoramento de filesystem em tempo real
+- Detecção de modificações não autorizadas
+- Importância da integridade de arquivos na segurança
 
 ## Use Cases
 - Monitorar arquivos de configuração do sistema
@@ -194,5 +204,37 @@ scan_interval: 3600  # 1 hora
 - Slack/Teams notifications
 - SOAR platforms
 
+## Compatibilidade
+
+| Sistema | Caminhos comuns | Observações |
+|---------|-----------------|-------------|
+| Linux | `/etc`, `/var`, `/home` | Requer `sudo` para alguns diretórios |
+| Windows | `C:\Windows`, `C:\Program Files` | Execute como Administrador |
+| macOS | `/etc`, `/Library`, `/Users` | Requer `sudo` |
+
+## Troubleshooting
+
+### Erro: "No such file or directory: logs/fim.log"
+**Solução:** O código agora cria a pasta automaticamente. Se persistir:
+```bash
+mkdir logs
+```
+
+### Erro: "Permission denied" ao monitorar /etc
+**Solução:** Execute com privilégios elevados:
+```bash
+sudo python fim.py --monitor --path /etc  # Linux/Mac
+```
+
+### Windows: "Access is denied"
+**Solução:** Execute o PowerShell ou CMD como Administrador
+
 ## Licença
 MIT License
+
+## Autor
+Miguel "444dex" Kuipers - [LinkedIn](https://www.linkedin.com/in/miguel-erick-assun%C3%A7%C3%A3o-kuipers-9665382b4/) - [GitHub](https://github.com/444dex)
+
+---
+
+**Nota:** Sempre teste em ambiente de desenvolvimento antes de usar em produção.
