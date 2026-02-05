@@ -73,7 +73,7 @@ Honeypot SSH que registra tentativas de ataque e comportamento de atacantes.
 
 ---
 
-### 5 - Monitor de Integridade de Arquivos (FIM) (Em desenvolvimento)
+### 5 - Monitor de Integridade de Arquivos (FIM)
 **Tecnologias:** Python, Watchdog, Hashlib, SQLite
 
 Sistema de monitoramento de integridade que detecta modificações não autorizadas em arquivos críticos.
